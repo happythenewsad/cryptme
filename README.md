@@ -6,7 +6,8 @@ Melon is a minimal, open source secret manager (think 1Password CLI).
 
 Installation
 ============
-
+    gem install melon
+    
 Contributing
 ============
 
