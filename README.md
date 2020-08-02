@@ -21,6 +21,7 @@ command line processing DONE
 better exception message for incorrecr password DONE
 works from different directories DONE
 copy to clipboard DONE
+cleanup spec that touches file 'newpath.txt' in root dir
 gem release
 bin release
 
@@ -31,6 +32,7 @@ Feature: smarter file location
   - look for .melon file in current directory
   - or in given directory
   - after initialization, remember location in config file
+enforce .melon file extension
 brew installation
 more stable writing (handle IO failures)
 
