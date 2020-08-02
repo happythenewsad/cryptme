@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'melon'
+
+# bootstrap parser ###
+usage = "Usage: melon <path> \n If the given path is not a melon file, a new one will be created."
+if ARGV.length != 1
+  puts usage 
+  exit 
+end
+######################
+
+
+melon = Melon::Utils.new(path: ARGV.first)
+melon.persist
+
+Melon::REPLParser.melon = melon
+
+puts Melon::REPLParser.usage
+
+loop do 
+  putc '>'
+  inp = $stdin.gets.chomp
+  options = Melon::REPLParser.parse inp.split(' ')
+end
