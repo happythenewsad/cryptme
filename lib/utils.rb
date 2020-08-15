@@ -4,7 +4,7 @@ require 'set'
 require 'io/console'
 require 'rubygems/package'
 
-module Melon
+module Cryptme
   class Utils
     attr_accessor :data_hash, :iv # TODO: delete me
 
@@ -13,7 +13,7 @@ module Melon
       @path = path
 
       if !file_exists 
-        puts "Creating new melon - please enter a password:"
+        puts "Creating new cryptme - please enter a password:"
         @iv = OpenSSL::Cipher::AES256.new(:CBC).encrypt.random_iv
         @data_hash = {}
         get_password
@@ -24,7 +24,7 @@ module Melon
       unpacked = unpack(path)
       @encrypted = unpacked[:secrets]
       @iv = unpacked[:nonce]
-      puts "Melon found. Please type your password..."
+      puts "Cryptme found. Please type your password..."
       @data_hash = JSON.parse(
         decrypt(plain_password: get_password, data: @encrypted)
       )

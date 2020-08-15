@@ -4,36 +4,36 @@ Dir[File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', '*.rb'))].ea
 FIXTURES_DIRECTORY = File.join(File.dirname(__FILE__), 'fixtures')
 
 def write_fixture_file(path)
-  allow_any_instance_of(Melon::Utils).to receive(:get_password).and_return('letmein')
-  melon = Melon::Utils.new(path: path)
-  melon.put(:foo, 'bar')
-  melon.persist
-  melon
+  allow_any_instance_of(Cryptme::Utils).to receive(:get_password).and_return('letmein')
+  cryptme = Cryptme::Utils.new(path: path)
+  cryptme.put(:foo, 'bar')
+  cryptme.persist
+  cryptme
 end
 
-RSpec.describe Melon::Utils do 
+RSpec.describe Cryptme::Utils do 
   after(:each) do 
     Dir.foreach(FIXTURES_DIRECTORY) do |x| 
-      x.include?('.melon') ? File.delete(File.join(FIXTURES_DIRECTORY, x)) : 'noop'
+      x.include?('.cryptme') ? File.delete(File.join(FIXTURES_DIRECTORY, x)) : 'noop'
     end
   end
 
   describe '#initialize' do
     it 'should initialize new instance' do
-      allow_any_instance_of(Melon::Utils).to receive(:get_password).and_return('letmein')
-      melon = Melon::Utils.new(path: 'newpath.txt')
-      expect(melon.list).to eq []
-      expect(melon).to_not receive(:unpack)
+      allow_any_instance_of(Cryptme::Utils).to receive(:get_password).and_return('letmein')
+      cryptme = Cryptme::Utils.new(path: 'newpath.txt')
+      expect(cryptme.list).to eq []
+      expect(cryptme).to_not receive(:unpack)
     end
   end
   
 
   describe '#unpack' do
-    it 'should unpack a melon file' do 
-      path = File.join(FIXTURES_DIRECTORY, 'myfile.melon')
-      melon = write_fixture_file(path)
+    it 'should unpack a cryptme file' do 
+      path = File.join(FIXTURES_DIRECTORY, 'myfile.cryptme')
+      cryptme = write_fixture_file(path)
       expect(File.file? path).to be(true)
-      file_hash = melon.unpack(path)
+      file_hash = cryptme.unpack(path)
 
       expect(file_hash[:secrets]).to_not be nil
       expect(file_hash[:nonce]).to_not be nil
@@ -43,13 +43,13 @@ RSpec.describe Melon::Utils do
   describe '#persist' do
     before(:each) do 
       Dir.foreach(FIXTURES_DIRECTORY) do |x| 
-        x.include?('.melon') ? File.delete(File.join(FIXTURES_DIRECTORY, x)) : 'noop'
+        x.include?('.cryptme') ? File.delete(File.join(FIXTURES_DIRECTORY, x)) : 'noop'
       end
     end
 
     context 'file exists already' do
-      it 'should write to .melon file' do
-        path = File.join(FIXTURES_DIRECTORY, 'myfile.melon')
+      it 'should write to .cryptme file' do
+        path = File.join(FIXTURES_DIRECTORY, 'myfile.cryptme')
         write_fixture_file(path)
         write_fixture_file(path)
         expect(File.file? path).to be(true)
@@ -57,8 +57,8 @@ RSpec.describe Melon::Utils do
     end
 
     context 'writing a new file' do 
-      it 'should write a .melon file' do
-        path = File.join(FIXTURES_DIRECTORY, 'myfile.melon')
+      it 'should write a .cryptme file' do
+        path = File.join(FIXTURES_DIRECTORY, 'myfile.cryptme')
         write_fixture_file(path)
         expect(File.file? path).to be(true)
       end
@@ -68,31 +68,31 @@ RSpec.describe Melon::Utils do
   describe 'integration' do
     before(:all) do 
       Dir.foreach(FIXTURES_DIRECTORY) do |x| 
-        x.include?('.melon') ? File.delete(File.join(FIXTURES_DIRECTORY, x)) : 'noop'
+        x.include?('.cryptme') ? File.delete(File.join(FIXTURES_DIRECTORY, x)) : 'noop'
       end
     end
 
     after(:all) do 
       Dir.foreach(FIXTURES_DIRECTORY) do |x| 
-        x.include?('.melon') ? File.delete(File.join(FIXTURES_DIRECTORY, x)) : 'noop'
+        x.include?('.cryptme') ? File.delete(File.join(FIXTURES_DIRECTORY, x)) : 'noop'
       end
     end
 
-    context 'existing melon; actual file IO' do
+    context 'existing cryptme; actual file IO' do
       it 'should read an encrypted file, update a value, and read again' do
-        path = File.join(FIXTURES_DIRECTORY, 'myfile.melon')
+        path = File.join(FIXTURES_DIRECTORY, 'myfile.cryptme')
         password = 'letmein'
         write_fixture_file(path)
 
-        melon = Melon::Utils.new(path: path)
+        cryptme = Cryptme::Utils.new(path: path)
 
-        expect(melon.get('foo')).to eq 'bar'
-        melon.put(:foo, 'baz')
-        melon.persist
+        expect(cryptme.get('foo')).to eq 'bar'
+        cryptme.put(:foo, 'baz')
+        cryptme.persist
 
-        melon = Melon::Utils.new(path: path)
-        expect(melon.get('foo')).to eq 'baz'
-        expect(melon.list.to_set).to eq Set['foo']
+        cryptme = Cryptme::Utils.new(path: path)
+        expect(cryptme.get('foo')).to eq 'baz'
+        expect(cryptme.list.to_set).to eq Set['foo']
       end
     end
 

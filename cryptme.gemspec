@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name        = 'melon'
+  s.name        = 'cryptme'
   s.version     = '0.0.1'
   s.date        = '2020-08-01'
   s.summary     = "A simple open source secrets manager"
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.email       = 'happythenewsad@gmail.com'
   s.files       = ["lib/melon.rb"]
   s.homepage    = ''
-  s.executables << 'melon'
+  s.executables << 'cryptme'
   s.license     = 'MIT'
 
   s.add_development_dependency 'rspec'

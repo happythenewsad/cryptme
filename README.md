@@ -1,12 +1,12 @@
 Description
 ============
 
-Melon is a minimal, open source secret manager (think 1Password CLI).
+Cryptme is a minimal, open source secret manager (think 1Password CLI).
 
 
 Installation
 ============
-    gem install melon
+    gem install cryptme
     
 Contributing
 ============
@@ -30,10 +30,10 @@ bin release
 TODO, nice to have:
 Feature: smarter file location
   - always keep it in ~ ? permissions issues?
-  - look for .melon file in current directory
+  - look for .cryptme file in current directory
   - or in given directory
   - after initialization, remember location in config file
-enforce .melon file extension
+enforce .cryptme file extension
 brew installation
 more stable writing (handle IO failures)
 
