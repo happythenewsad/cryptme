@@ -11,15 +11,15 @@ end
 ######################
 
 
-cryptme = Melon::Utils.new(path: ARGV.first)
+cryptme = Cryptme::Utils.new(path: ARGV.first)
 cryptme.persist
 
-Melon::REPLParser.cryptme = cryptme
+Cryptme::REPLParser.cryptme = cryptme
 
-puts Melon::REPLParser.usage
+puts Cryptme::REPLParser.usage
 
 loop do 
   putc '>'
   inp = $stdin.gets.chomp
-  options = Melon::REPLParser.parse inp.split(' ')
+  options = Cryptme::REPLParser.parse inp.split(' ')
 end
