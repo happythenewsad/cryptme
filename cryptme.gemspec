@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'cryptme'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.homepage    = 'https://github.com/happythenewsad/cryptme'
   s.date        = '2020-08-01'
   s.summary     = "A simple open source secrets manager"
