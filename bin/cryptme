@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require 'melon'
+require 'cryptme'
 
 # bootstrap parser ###
-usage = "Usage: melon <path> \n If the given path is not a melon file, a new one will be created."
+usage = "Usage: cryptme <path> \n If the given path is not a cryptme file, a new one will be created."
 if ARGV.length != 1
   puts usage 
   exit 
@@ -11,10 +11,10 @@ end
 ######################
 
 
-melon = Melon::Utils.new(path: ARGV.first)
-melon.persist
+cryptme = Melon::Utils.new(path: ARGV.first)
+cryptme.persist
 
-Melon::REPLParser.melon = melon
+Melon::REPLParser.cryptme = cryptme
 
 puts Melon::REPLParser.usage
 
