@@ -13,21 +13,25 @@ Contributing
 
 Contributions are welcome - simply create a PR for open issues or enhancements.
 
+Publishing
+----------
+
+    gem build cryptme.gemspec
+    gem push cryptme-X.X.X.gem
+
 
 Upcoming features
 =================
 
 TODO, top priority:
-command line processing DONE
-better exception message for incorrecr password DONE
-works from different directories DONE
-copy to clipboard DONE
+------
+
 cleanup spec that touches file 'newpath.txt' in root dir
-gem release
 bin release
 
 
 TODO, nice to have:
+-----
 Feature: smarter file location
   - always keep it in ~ ? permissions issues?
   - look for .cryptme file in current directory
@@ -37,8 +41,12 @@ enforce .cryptme file extension
 brew installation
 more stable writing (handle IO failures)
 
-
-
+DONE
+----
+command line processing
+better exception message for incorrecr password
+works from different directories
+copy to clipboard
 
 Design and architecture decisions
 ====================
