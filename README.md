@@ -7,6 +7,12 @@ Cryptme is a minimal, open source secret manager (think 1Password CLI).
 Installation
 ============
     gem install cryptme
+
+Usage
+====
+    cryptme # lists available commands
+
+Prefix the above command with `bundle exec` when using Bundler.
     
 Contributing
 ============
