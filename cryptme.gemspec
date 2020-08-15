@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "A simple open source secrets manager"
   s.authors     = ["happythenewsad"]
   s.email       = 'happythenewsad@gmail.com'
-  s.files       = ["lib/melon.rb"]
+  s.files       = ["lib/cryptme.rb"]
   s.homepage    = ''
   s.executables << 'cryptme'
   s.license     = 'MIT'
