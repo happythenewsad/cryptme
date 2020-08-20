@@ -3,7 +3,12 @@
 require 'cryptme'
 
 # bootstrap parser ###
-usage = "Usage: cryptme <path> \n If the given path is not a cryptme file, a new one will be created."
+usage = <<~HEREDOC
+  Usage: cryptme <path> \n If the given path is not a cryptme file, 
+  a new one will be created. Cryptme files must have a .cryptme file extension - 
+  the extension will be added automatically when creating a new cryptme file.
+HEREDOC
+
 if ARGV.length != 1
   puts usage 
   exit 

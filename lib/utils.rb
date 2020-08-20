@@ -6,11 +6,12 @@ require 'rubygems/package'
 
 module Cryptme
   class Utils
-    attr_accessor :data_hash, :iv # TODO: delete me
+    CRYPTME_FILE_EXT = '.cryptme'.freeze
 
     def initialize(path: )
-      file_exists = File.file?(path)
-      @path = path
+      path_with_ext = ensure_cryptme_file_ext path
+      file_exists = File.file?(path_with_ext)
+      @path = path_with_ext 
 
       if !file_exists 
         puts "Creating new cryptme - please enter a password:"
@@ -47,7 +48,7 @@ module Cryptme
 
       @cipher.key = gen_key(@password || get_password)
 
-      @iv = @cipher.random_iv # this assigns inside cipher
+      @iv = @cipher.random_iv # this function mutates the @cipher variable
       # we can assign to @iv here because we wouldn't (hopefully!) be encrypted something
       # that is already encrypted
       @encrypted = @cipher.update(@data_hash.to_json) + @cipher.final
@@ -115,6 +116,10 @@ module Cryptme
     end
 
     private
+
+    def ensure_cryptme_file_ext path 
+      path.end_with?(CRYPTME_FILE_EXT) ? path : path + CRYPTME_FILE_EXT
+    end
 
     def get_password
       @password = STDIN.noecho(&:gets)

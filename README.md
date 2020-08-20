@@ -17,7 +17,7 @@ Prefix the above command with `bundle exec` when using Bundler.
 Contributing
 ============
 
-Contributions are welcome - simply create a PR for open issues or enhancements.
+Contributions are welcome - simply create a PR against `master` for open issues or enhancements.
 
 Publishing
 ----------
@@ -31,10 +31,7 @@ Upcoming features
 
 TODO, top priority:
 ------
-
-cleanup spec that touches file 'newpath.txt' in root dir
-bin release
-
+brew installation
 
 TODO, nice to have:
 -----
@@ -43,8 +40,7 @@ Feature: smarter file location
   - look for .cryptme file in current directory
   - or in given directory
   - after initialization, remember location in config file
-enforce .cryptme file extension
-brew installation
+
 more stable writing (handle IO failures)
 
 DONE
@@ -53,6 +49,9 @@ command line processing
 better exception message for incorrecr password
 works from different directories
 copy to clipboard
+cleanup spec that touches file 'newpath.txt' in root dir
+bin release
+enforce .cryptme file extension
 
 Design and architecture decisions
 ====================
