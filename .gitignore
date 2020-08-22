@@ -1,1 +1,5 @@
 *.gem
+Gemfile.lock
+a.out
+*.ipynb
+.ipynb_checkpoints

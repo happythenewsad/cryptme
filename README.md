@@ -46,7 +46,8 @@ Upcoming features
 
 TODO, top priority:
 ------
-brew installation
+- installation by executable
+- improve error messaging and signal handling
 
 TODO, nice to have:
 -----
