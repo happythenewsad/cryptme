@@ -34,11 +34,17 @@ Contributing
 
 Contributions are welcome - simply create a PR against `master` for open issues or enhancements.
 
-Publishing
+Publishing (gem)
 ----------
 
     gem build cryptme.gemspec
     gem push cryptme-X.X.X.gem
+
+Publishing (executable)
+----
+- install [ruby-packer](https://github.com/pmq20/ruby-packer) as `rubyc`
+- rubyc bin/cryptme
+- mv a.out cryptme-X.X.X (where X.X.X is the semver specified in the gemspec)
 
 
 Upcoming features

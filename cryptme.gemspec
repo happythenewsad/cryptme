@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'cryptme'
-  s.version     = '0.0.4'
+  s.version     = '0.0.5'
   s.homepage    = 'https://github.com/happythenewsad/cryptme'
   s.date        = '2020-08-01'
   s.summary     = "A simple open source secrets manager"
@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'clipboard', '~> 1.3'
   s.add_runtime_dependency 'ffi', '~> 1.3' # Required by Clipboard on Windows
-  
+
   s.add_development_dependency 'rspec', '~> 3.8'
   s.add_development_dependency 'pry', '~> 0.13'
 end
