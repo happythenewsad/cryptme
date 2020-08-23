@@ -44,13 +44,14 @@ Publishing (executable)
 ----
 - install [ruby-packer](https://github.com/pmq20/ruby-packer) as `rubyc`
 - rubyc bin/cryptme
-- CRYPTME_VERSION=`cat lib/VERSION` && mv a.out "cryptme-${CRYPTME_VERSION}"
+- CRYPTME_VERSION=`cat lib/VERSION` mv a.out "cryptme-${CRYPTME_VERSION}"
 
 Integration testing with Docker
 -----
 - install Docker
-- docker build -t <your_username>/cryptme_integration_test .
-- docker run <your_username>/cryptme_integration_test
+- CRYPTME_VERSION=`cat lib/VERSION` CRYPTME_EXECUTABLE="cryptme-${CRYPTME_VERSION}" docker build -t cryptme_integration_test .
+- docker run cryptme_integration_test
+- docker 
 - The default docker file will simply call `cryptme`, then exit. Verify that exit code is 0, or modify the dockerfile to start `cryptme` interactively
 
 Upcoming features
