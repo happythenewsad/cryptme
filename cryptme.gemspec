@@ -1,6 +1,9 @@
+version_file = File.expand_path("../lib/VERSION", __FILE__)
+version = File.read(version_file)
+
 Gem::Specification.new do |s|
   s.name        = 'cryptme'
-  s.version     = '0.0.5'
+  s.version     = version
   s.homepage    = 'https://github.com/happythenewsad/cryptme'
   s.date        = '2020-08-01'
   s.summary     = "A simple open source secrets manager"
