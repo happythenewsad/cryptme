@@ -1,7 +1,7 @@
 Description
 ============
 
-Cryptme is a minimal, open source secret manager (think 1Password CLI).
+Cryptme is a minimal, open source secret manager (think 1Password CLI). Other secrets/password management solutions exist, and may be the right choice for you. This one favors simplicity; it attempts to do one thing well, with source code simple enough for an interested individual to quickly understand.
 
 
 Installation
@@ -12,16 +12,11 @@ Installation
 gem install cryptme
 bundle exec cryptme
 ```
-- Via executable
+- Via executable (macOS only, currently)
 ```bash
-    under construction
+    ./cryptme-X.X.X
 ```
 
-| Environment | Supported? |
-| ----------- | ----------- |
-| macOS 10.15     |       |
-| Windows   |        |
-| Linux | |
 
 Usage
 ====
@@ -40,17 +35,17 @@ Publishing (gem)
     gem build cryptme.gemspec
     gem push cryptme-X.X.X.gem
 
-Publishing (executable)
+Publishing (macOS executable)
 ----
 - install [ruby-packer](https://github.com/pmq20/ruby-packer) as `rubyc`
 - rubyc bin/cryptme
 - CRYPTME_VERSION=`cat lib/VERSION` mv a.out "cryptme-${CRYPTME_VERSION}"
 
-Integration testing with Docker
+Integration testing with Docker (under construction)
 -----
 - install Docker
-- CRYPTME_VERSION=`cat lib/VERSION` CRYPTME_EXECUTABLE="cryptme-${CRYPTME_VERSION}" docker build -t cryptme_integration_test .
-- docker run cryptme_integration_test
+- `CRYPTME_VERSION=`cat lib/VERSION`  docker build -t cryptme_integration_test --build-arg CRYPTME_EXECUTABLE="cryptme-${CRYPTME_VERSION}" . --no-cache`
+- `docker run cryptme_integration_test`
 - docker 
 - The default docker file will simply call `cryptme`, then exit. Verify that exit code is 0, or modify the dockerfile to start `cryptme` interactively
 
@@ -59,7 +54,7 @@ Upcoming features
 
 TODO, top priority:
 ------
-- installation by executable
+- installation by executable, Linux & Windows
 - improve error messaging and signal handling
 
 TODO, nice to have:
@@ -74,13 +69,14 @@ more stable writing (handle IO failures)
 
 DONE
 ----
-command line processing
-better exception message for incorrecr password
-works from different directories
-copy to clipboard
-cleanup spec that touches file 'newpath.txt' in root dir
-bin release
-enforce .cryptme file extension
+- installation by executable, macOS
+- command line processing
+- better exception message for incorrecr password
+- works from different directories
+- copy to clipboard
+- cleanup spec that touches file 'newpath.txt' in root dir
+- bin release
+- enforce .cryptme file extension
 
 Design and architecture decisions
 ====================
