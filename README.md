@@ -12,11 +12,6 @@ Installation
 gem install cryptme
 bundle exec cryptme
 ```
-- Via executable (macOS only, currently)
-```bash
-    ./cryptme-X.X.X
-```
-
 
 Usage
 ====
@@ -35,7 +30,7 @@ Publishing (gem)
     gem build cryptme.gemspec
     gem push cryptme-X.X.X.gem
 
-Publishing (macOS executable)
+Publishing (macOS executable, under construction)
 ----
 - install [ruby-packer](https://github.com/pmq20/ruby-packer) as `rubyc`
 - rubyc bin/cryptme
@@ -54,6 +49,7 @@ Upcoming features
 
 TODO, top priority:
 ------
+- setup CI
 - installation by executable, Linux & Windows
 - improve error messaging and signal handling
 
@@ -67,16 +63,6 @@ Feature: smarter file location
 
 more stable writing (handle IO failures)
 
-DONE
-----
-- installation by executable, macOS
-- command line processing
-- better exception message for incorrecr password
-- works from different directories
-- copy to clipboard
-- cleanup spec that touches file 'newpath.txt' in root dir
-- bin release
-- enforce .cryptme file extension
 
 Design and architecture decisions
 ====================
