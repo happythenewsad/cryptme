@@ -17,7 +17,6 @@ end
 
 
 cryptme = Cryptme::Utils.new(path: ARGV.first)
-cryptme.persist
 
 Cryptme::REPLParser.cryptme = cryptme
 
