@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.executables << 'cryptme'
   s.license     = 'MIT'
 
+  s.add_runtime_dependency 'argon2', '~> 2.3'
   s.add_runtime_dependency 'clipboard', '~> 1.3'
   s.add_runtime_dependency 'ffi', '~> 1.3' # Required by Clipboard on Windows
 

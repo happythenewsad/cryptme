@@ -1,3 +1,4 @@
+require 'argon2'
 require 'openssl' 
 require 'json'
 require 'set'
@@ -23,6 +24,9 @@ module Cryptme
       end
       
       unpacked = unpack(path)
+      @key_options = unpacked[:key_options] || {
+        'type' => 'sha256'
+      }
       @encrypted = unpacked[:secrets]
       @iv = unpacked[:nonce]
       puts "Cryptme found. Please type your password..."
@@ -46,6 +50,14 @@ module Cryptme
     def encrypt
       @cipher = OpenSSL::Cipher::AES256.new(:CBC).encrypt
 
+      profile = Argon2::Profiles[:rfc_9106_high_memory]
+      @key_options = {
+        'type' => 'argon2',
+        'salt' => Argon2::Engine::saltgen.unpack('H*'),
+        't' => profile[:t_cost],
+        'm' => profile[:m_cost],
+        'p' => profile[:p_cost]
+      }
       @cipher.key = gen_key(@password || get_password)
 
       @iv = @cipher.random_iv # this function mutates the @cipher variable
@@ -80,15 +92,17 @@ module Cryptme
         Gem::Package::TarReader.new(file) do |tar|
 
           tar.each do |entry|
-            if entry.full_name == 'nonce'
+            case entry.full_name
+            when 'nonce'
               file_hash[:nonce] = entry.read
-            end
-            if entry.full_name == 'secrets'
+            when 'secrets'
               file_hash[:secrets] = entry.read
+            when 'key_options'
+              file_hash[:key_options] = JSON.parse(entry.read)
+            else
+              raise "can't unpack unsupported entry name: #{entry.full_name}"
             end
           end
-    
-          raise 'bad unpack!' unless file_hash.keys.to_set == Set[:secrets, :nonce]
         end
       end
       file_hash
@@ -110,6 +124,13 @@ module Cryptme
           ) do |io|
             io.write(@iv)
           end
+
+          key_options = @key_options.to_json
+          tar.add_file_simple("key_options",
+            0444, key_options.length
+          ) do |io|
+            io.write(key_options)
+          end
         end
       end
 
@@ -126,9 +147,19 @@ module Cryptme
     end
 
     def gen_key plain_password
-      digestor = OpenSSL::Digest.new('sha256')
-      digestor << plain_password
-      digestor.digest    
+      case @key_options['type']
+      when 'argon2'
+        Argon2::Engine
+          .hash_argon2id(plain_password, @key_options['salt'].pack('H*'), @key_options['t'], @key_options['m'], @key_options['p'])
+          .split
+          .pack('H*')
+      when 'sha256'
+        digestor = OpenSSL::Digest.new('sha256')
+        digestor << plain_password
+        digestor.digest
+      else
+        raise "unknown key derivation algorithm: #{@key_options['type']}"
+      end
     end
 
   end
