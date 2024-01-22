@@ -1,3 +1,4 @@
+require 'argon2'
 require 'openssl' 
 require 'json'
 require 'set'
@@ -49,6 +50,14 @@ module Cryptme
     def encrypt
       @cipher = OpenSSL::Cipher::AES256.new(:CBC).encrypt
 
+      profile = Argon2::Profiles[:rfc_9106_high_memory]
+      @key_options = {
+        'type' => 'argon2',
+        'salt' => Argon2::Engine::saltgen.unpack('H*'),
+        't' => profile[:t_cost],
+        'm' => profile[:m_cost],
+        'p' => profile[:p_cost]
+      }
       @cipher.key = gen_key(@password || get_password)
 
       @iv = @cipher.random_iv # this function mutates the @cipher variable
@@ -139,6 +148,11 @@ module Cryptme
 
     def gen_key plain_password
       case @key_options['type']
+      when 'argon2'
+        Argon2::Engine
+          .hash_argon2id(plain_password, @key_options['salt'].pack('H*'), @key_options['t'], @key_options['m'], @key_options['p'])
+          .split
+          .pack('H*')
       when 'sha256'
         digestor = OpenSSL::Digest.new('sha256')
         digestor << plain_password
