@@ -80,10 +80,10 @@ module Cryptme
         Gem::Package::TarReader.new(file) do |tar|
 
           tar.each do |entry|
-            if entry.full_name == 'nonce'
+            case entry.full_name
+            when 'nonce'
               file_hash[:nonce] = entry.read
-            end
-            if entry.full_name == 'secrets'
+            when 'secrets'
               file_hash[:secrets] = entry.read
             end
           end
