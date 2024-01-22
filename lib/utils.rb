@@ -85,10 +85,10 @@ module Cryptme
               file_hash[:nonce] = entry.read
             when 'secrets'
               file_hash[:secrets] = entry.read
+            else
+              raise "can't unpack unsupported entry name: #{entry.full_name}"
             end
           end
-    
-          raise 'bad unpack!' unless file_hash.keys.to_set == Set[:secrets, :nonce]
         end
       end
       file_hash
