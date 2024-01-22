@@ -23,6 +23,9 @@ module Cryptme
       end
       
       unpacked = unpack(path)
+      @key_options = unpacked[:key_options] || {
+        'type' => 'sha256'
+      }
       @encrypted = unpacked[:secrets]
       @iv = unpacked[:nonce]
       puts "Cryptme found. Please type your password..."
@@ -85,6 +88,8 @@ module Cryptme
               file_hash[:nonce] = entry.read
             when 'secrets'
               file_hash[:secrets] = entry.read
+            when 'key_options'
+              file_hash[:key_options] = JSON.parse(entry.read)
             else
               raise "can't unpack unsupported entry name: #{entry.full_name}"
             end
@@ -110,6 +115,13 @@ module Cryptme
           ) do |io|
             io.write(@iv)
           end
+
+          key_options = @key_options.to_json
+          tar.add_file_simple("key_options",
+            0444, key_options.length
+          ) do |io|
+            io.write(key_options)
+          end
         end
       end
 
@@ -126,9 +138,14 @@ module Cryptme
     end
 
     def gen_key plain_password
-      digestor = OpenSSL::Digest.new('sha256')
-      digestor << plain_password
-      digestor.digest    
+      case @key_options['type']
+      when 'sha256'
+        digestor = OpenSSL::Digest.new('sha256')
+        digestor << plain_password
+        digestor.digest
+      else
+        raise "unknown key derivation algorithm: #{@key_options['type']}"
+      end
     end
 
   end
